@@ -1,0 +1,9 @@
+replicaCount: 3
+containerPort: 5431
+dockerImage: "xyz"
+namespace: "dev"
+appname: "model"
+annotation: "new model"
+domain: "model1.argok3s.tk" 
+modelFilename: "model1"
+bucket: "mybucket"

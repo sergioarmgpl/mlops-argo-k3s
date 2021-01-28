@@ -1,0 +1,4 @@
+For troubleshooting the model deployment execute:
+
+kubectl get pods -n yournamespace
+
