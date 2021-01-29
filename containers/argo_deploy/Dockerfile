@@ -28,9 +28,6 @@ set $argoapp \
 -p domain="$domain" \
 -p modelFilename="$modelFilename" \
 -p bucket="$bucket" \
--p aws_key="$aws_key" \
--p aws_secret="$aws_secret" \
--p aws_region="$aws_region" \
 --auth-token $argotoken && \
 argocd app --insecure --grpc-web \
 --server $argoserver sync $argoapp \

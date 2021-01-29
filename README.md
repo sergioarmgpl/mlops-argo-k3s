@@ -57,3 +57,8 @@ kubectl apply -f argocd/argocd-ingress.yaml
 ### ArgoCD Password
 kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2
 
+curl -sSL -k $ARGOCD_SERVER/api/v1/session -d $'{"username":"admin","password":"argocd-server-5d7d9b7f9c-x8l7n"}'
+
+TOKEN
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTE4MTQxMDgsImlzcyI6ImFyZ29jZCIsIm5iZiI6MTYxMTgxNDEwOCwic3ViIjoiYWRtaW4ifQ.CXYar_6Seao9jnbDDLr9wCH-XEXqsR5-l9MUK4UxYJA
+
