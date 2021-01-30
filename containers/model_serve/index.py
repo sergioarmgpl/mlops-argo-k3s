@@ -1,3 +1,4 @@
+from google.cloud import storage
 from flask import Flask, request
 from flask import jsonify
 import json
@@ -11,14 +12,23 @@ from sklearn.preprocessing import MinMaxScaler
 import os
  
 clf = None 
+
+
+def download_blob(bucket_name, source_blob_name, destination_file_name):
+    storage_client = storage.Client.from_service_account_json('argok3s.json')
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(source_blob_name)
+    blob.download_to_filename(destination_file_name)
+
 # Download model and cluster_names from s3
 def loadModel():
     global clf
     model = os.environ["MODELFILENAME"]
     bucket = os.environ["BUCKET"]
     # Model download
+    download_blob(bucket,model,model)
     # Load model file
-    clf = load(model+'.pkl')
+    clf = load(model+'.model')
     print("model loaded")
 
 @app.route('/')

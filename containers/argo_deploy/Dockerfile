@@ -1,4 +1,4 @@
-#RUN as: docker build --build-arg argodomain=URL -t argocd-cli .
+#RUN as: docker build --build-arg argodomain=URL argotoken=TOKEN -t argocd-cli .
 FROM alpine:3.7
 ARG argodomain
 ENV argoserver=$argodomain
@@ -9,10 +9,9 @@ ENV containerPort=5431
 ENV dockerImage="xyz"
 ENV namespace="dev"
 ENV appname="model"
-ENV annotation="new model"
-ENV domain="model1.domain.tld"
+ENV annotation="new deploy"
 ENV modelFilename="model1"
-ENV bucket="bucket-sagemaker-test"
+ENV bucket="bucket"
 RUN apk add curl
 RUN curl -sSL -k -o argocd https://$argodomain/download/argocd-linux-amd64
 RUN chmod 755 argocd
@@ -25,7 +24,6 @@ set $argoapp \
 -p namespace="$namespace" \
 -p appname="$appname" \
 -p annotation="$annotation" \
--p domain="$domain" \
 -p modelFilename="$modelFilename" \
 -p bucket="$bucket" \
 --auth-token $argotoken && \
