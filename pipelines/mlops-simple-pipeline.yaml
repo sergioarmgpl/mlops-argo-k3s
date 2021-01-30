@@ -1,0 +1,65 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: mlops-simple-pipeline-
+spec:
+  entrypoint: pipeline
+  arguments:
+    parameters:
+    - name: argodomain
+      value: cd.argok3s.tk
+    - name: argoapp
+      value: model1
+    - name: argotoken
+      value: "ARGOTOKEN"
+    - name: replicaCount
+      value: 3
+    - name: containerPort
+      value: 5431
+    - name: dockerImage
+      value: czdev/sklearn_model_gcp
+    - name: appname
+      value: model1
+    - name: annotation
+      value: "update github, fix bucket"
+    - name: modelFilename
+      value: scores
+    - name: bucket
+      value: argok3s2
+
+  templates:
+  - name: pipeline
+    steps:
+    - - name: etl-step
+        template: etl
+    - - name: deploy-step
+        template: deploy
+
+#  templates:
+  - name: etl
+    container:
+      image: czdev/scoresml:latest
+  - name: deploy
+    container:
+      image: czdev/argocd-cli:latest
+      env:
+      - name: argodomain
+        value: "{{workflow.parameters.argodomain}}"
+      - name: argoapp
+        value: "{{workflow.parameters.argoapp}}"
+      - name: argotoken
+        value: "{{workflow.parameters.argotoken}}"
+      - name: replicaCount
+        value: "{{workflow.parameters.replicaCount}}"
+      - name: containerPort
+        value: "{{workflow.parameters.containerPort}}"
+      - name: dockerImage
+        value: "{{workflow.parameters.dockerImage}}"
+      - name: appname
+        value: "{{workflow.parameters.appname}}"
+      - name: annotation
+        value: "{{workflow.parameters.annotation}}"
+      - name: modelFilename
+        value: "{{workflow.parameters.modelFilename}}"
+      - name: bucket
+        value: "{{workflow.parameters.bucket}}"

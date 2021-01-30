@@ -23,12 +23,12 @@ def download_blob(bucket_name, source_blob_name, destination_file_name):
 # Download model and cluster_names from s3
 def loadModel():
     global clf
-    model = os.environ["MODELFILENAME"]
+    model = os.environ["MODELFILENAME"]+".model"
     bucket = os.environ["BUCKET"]
     # Model download
     download_blob(bucket,model,model)
     # Load model file
-    clf = load(model+'.model')
+    clf = load(model)
     print("model loaded")
 
 @app.route('/')
@@ -49,4 +49,3 @@ def _health():
 if __name__ == '__main__':
     loadModel()
     app.run(host='0.0.0.0', port=5431, debug=True)
-
