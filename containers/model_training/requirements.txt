@@ -1,0 +1,7 @@
+flask
+requests
+scikit-learn
+pandas
+google-cloud-storage
+fsspec
+gcsfs

@@ -1,4 +1,4 @@
 #!/bin/bash
-docker login
-docker build -t $1/sklearn_model_gcp .
-docker push $1/sklearn_model_gcp
+docker login -u $1
+docker build -t $1/model_serve .
+docker push $1/model_serve

@@ -10,45 +10,55 @@ spec:
       value: cd.argok3s.tk
     - name: argoapp
       value: model1
-    - name: argotoken
-      value: "ARGOTOKEN"
+#    - name: argotoken
+#      value: "ARGOTOKEN"
     - name: replicaCount
       value: 3
     - name: containerPort
       value: 5431
     - name: dockerImage
-      value: czdev/sklearn_model_gcp
+      value: czdev/model_serve
     - name: appname
       value: model1
     - name: annotation
-      value: "update github, fix bucket"
+      value: "Another deployment"
     - name: modelFilename
       value: scores
     - name: bucket
-      value: argok3s2
+      value: kubeconeu2021
 
   templates:
   - name: pipeline
     steps:
-    - - name: etl-step
+    - - name: ETL-Process
         template: etl
-    - - name: deploy-step
+    - - name: Model-Training
+        template: training
+    - - name: Model-Serve
         template: deploy
-
 #  templates:
   - name: etl
     container:
-      image: czdev/scoresml:latest
+      image: czdev/etl:latest
+      env:
+      - name: BUCKET
+        value: "{{workflow.parameters.bucket}}"
+  - name: training
+    container:
+      image: czdev/model_training:latest
+      env:
+      - name: BUCKET
+        value: "{{workflow.parameters.bucket}}"
   - name: deploy
     container:
-      image: czdev/argocd-cli:latest
+      image: czdev/argocd-deploy:latest
       env:
       - name: argodomain
         value: "{{workflow.parameters.argodomain}}"
       - name: argoapp
         value: "{{workflow.parameters.argoapp}}"
-      - name: argotoken
-        value: "{{workflow.parameters.argotoken}}"
+#      - name: argotoken
+#        value: "{{workflow.parameters.argotoken}}"
       - name: replicaCount
         value: "{{workflow.parameters.replicaCount}}"
       - name: containerPort

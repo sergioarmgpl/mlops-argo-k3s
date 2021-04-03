@@ -26,6 +26,8 @@ spec:
             value: {{ .Values.modelFilename }}
           - name: BUCKET
             value: {{ .Values.bucket }}
+          - name: CHANGES
+            value: "{{ .Values.annotation }}"
         ports:
         - containerPort: {{ .Values.containerPort }}
 #uncomment if you use secrets

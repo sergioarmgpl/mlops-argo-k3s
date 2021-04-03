@@ -14,8 +14,8 @@ spec:
       - backend:
           serviceName: argocd-server
           servicePort: https
-    host: cd.argok3s.tk
+    host: cd.mlops.tk
   tls:
   - hosts:
-    - cd.argok3s.tk
+    - cd.mlops.tk
     secretName: argocd-secret # do not change, this is provided by Argo CD

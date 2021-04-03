@@ -1,9 +1,11 @@
-#RUN as: docker build --build-arg argodomain=URL argotoken=TOKEN -t argocd-cli .
+#RUN as: docker build --build-arg argodomain=URL argotoken=TOKEN -t argocd-deploy .
 FROM alpine:3.7
 ARG argodomain
+ARG argotoken
 ENV argoserver=$argodomain
 ENV argoapp="model"
-ENV argotoken="token"
+#ENV argotoken="token"
+ENV argotoken=$argotoken
 ENV replicaCount=3
 ENV containerPort=5431
 ENV dockerImage="xyz"

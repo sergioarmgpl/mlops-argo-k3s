@@ -1,3 +1,6 @@
 id_rsa
 id_rsa.pub
-scores.*
+keys/
+argok3s.json
+scores.csv
+scores_processed.csv
