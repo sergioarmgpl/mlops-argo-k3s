@@ -141,8 +141,9 @@ The containers included are:
 - argo_deploy: Deploy your model using ArgoCD
 - etl: Remove unnecesary fields from the csv and upload the generated file(scores_processed.csv) to your bucket
 - model_training: Train a new model using the Linear Regression algorithm and upload the model(scores.model) to your bucket
-- model_server: Creates a basic API REST to get predictions from the model
+- model_serve: Creates a basic API REST to get predictions from the model
 - inference: Get Predictions from the exposed model
+Note: For etl, model_serve and inference containers you need a service account json file called argok3s.json located inside each container folder in order to be pushed to DockerHub or your container registry of your choice.
 
 
 ### Create argo_deploy container
@@ -206,6 +207,21 @@ cd model_serve
 cd ..
 ```
 
+### Create Inference container
+To generate your Inference container follow the next steps:
+1. Move to the etl folder
+```
+cd inference
+```
+2. Run the build command using your DockerHub user
+```
+/bin/bash build.sh DOCKERHUB_USER
+```
+3. Return to the containers folder
+```
+cd ..
+```
+
 
 ### Running Argo Workflows Examples Manually
 1. To execute an example from ArgoCD execute:
@@ -219,7 +235,7 @@ argo submit -n argo --serviceaccount argo --watch pipelines/mlops-simple-pipelin
 ```
 To send parameters using argo submit you can use -p parameter, to customize your execution
 ```
-argo submit -n argo --serviceaccount argo --watch pipelines/mlops-simple-pipeline.yaml -p annotation="Test for KubeConEU2021" -p bucket="kubeconeu2021"
+argo submit -n argo --serviceaccount argo --watch pipelines/mlops-simple-pipeline.yaml -p annotation="Reason of Running the ML Pipeline"
 ```
 
 3. To run a model deployment execute:

@@ -7,7 +7,9 @@ spec:
   arguments:
     parameters:
     - name: argodomain
-      value: cd.argok3s.tk
+      value: cd.mlops.tk
+    - name: endpoint
+      value: mlops.tk
     - name: argoapp
       value: model1
 #    - name: argotoken
@@ -36,6 +38,8 @@ spec:
         template: training
     - - name: Model-Serve
         template: deploy
+    - - name: Inference
+        template: inference
 #  templates:
   - name: etl
     container:
@@ -73,3 +77,13 @@ spec:
         value: "{{workflow.parameters.modelFilename}}"
       - name: bucket
         value: "{{workflow.parameters.bucket}}"
+  - name: inference
+    container:
+      image: czdev/inference:latest
+      env:
+      - name: BUCKET
+        value: "{{workflow.parameters.bucket}}"
+      - name: endpoint
+        value: "{{workflow.parameters.endpoint}}"
+      - name: appname
+        value: "{{workflow.parameters.appname}}"
