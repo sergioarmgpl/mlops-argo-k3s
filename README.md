@@ -220,6 +220,7 @@ cd inference
 3. Return to the containers folder
 ```
 cd ..
+cd ..
 ```
 
 
